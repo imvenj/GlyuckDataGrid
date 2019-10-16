@@ -18,17 +18,12 @@ open class DataGridViewColumnHeaderCell: DataGridViewBaseHeaderCell {
         appearance.borderBottomColor = UIColor(white: 0.73, alpha: 1)
         appearance.borderBottomWidth = 1 / UIScreen.main.scale
         
-        if let labelAppearance = UILabel.glyuck_appearanceWhenContained(in: DataGridViewColumnHeaderCell.self) {
-            if #available(iOS 8.2, *) {
-                labelAppearance.appearanceFont = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
-            } else {
-                labelAppearance.appearanceFont = UIFont(name: "HelveticaNeue", size: 14)
-            }
-            labelAppearance.appearanceTextAlignment = .center
-            labelAppearance.appearanceAdjustsFontSizeToFitWidth = true
-            labelAppearance.appearanceMinimumScaleFactor = 0.5
-            labelAppearance.appearanceNumberOfLines = 0
-        }
+        let labelAppearance = UILabel.appearance(whenContainedInInstancesOf: [DataGridViewColumnHeaderCell.self])
+        labelAppearance.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
+        labelAppearance.textAlignment = .center
+        labelAppearance.adjustsFontSizeToFitWidth = true
+        labelAppearance.minimumScaleFactor = 0.5
+        labelAppearance.numberOfLines = 0
         
     }()
     // MARK: - UIView

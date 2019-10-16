@@ -14,36 +14,36 @@ class MultiplicationTableViewController: UIViewController, DataGridViewDataSourc
     @IBOutlet weak var dataGridView: DataGridView!
 
     func setupView() {
-        let dataGridAppearance = DataGridView.glyuck_appearanceWhenContained(in: MultiplicationTableViewController.self)!
+        let dataGridAppearance = DataGridView.appearance(whenContainedInInstancesOf: [MultiplicationTableViewController.self])
         dataGridAppearance.row1BackgroundColor = nil
         dataGridAppearance.row2BackgroundColor = nil
 
-        let cornerHeaderAppearance = DataGridViewCornerHeaderCell.glyuck_appearanceWhenContained(in: MultiplicationTableViewController.self)!
+        let cornerHeaderAppearance = DataGridViewCornerHeaderCell.appearance(whenContainedInInstancesOf: [MultiplicationTableViewController.self])
         cornerHeaderAppearance.backgroundColor = UIColor.white
         cornerHeaderAppearance.borderBottomWidth = 1 / UIScreen.main.scale
         cornerHeaderAppearance.borderBottomColor = UIColor(white: 0.73, alpha: 1)
         cornerHeaderAppearance.borderRightWidth = 1 / UIScreen.main.scale
         cornerHeaderAppearance.borderRightColor = UIColor(white: 0.73, alpha: 1)
 
-        let rowHeaderAppearance = DataGridViewRowHeaderCell.glyuck_appearanceWhenContained(in: MultiplicationTableViewController.self)!
+        let rowHeaderAppearance = DataGridViewRowHeaderCell.appearance(whenContainedInInstancesOf: [MultiplicationTableViewController.self])
         rowHeaderAppearance.backgroundColor = UIColor(white: 0.95, alpha: 1)
         rowHeaderAppearance.borderBottomWidth = 1 / UIScreen.main.scale
         rowHeaderAppearance.borderBottomColor = UIColor(white: 0.73, alpha: 1)
 
-        let columnHeaderAppearance = DataGridViewColumnHeaderCell.glyuck_appearanceWhenContained(in: MultiplicationTableViewController.self)!
+        let columnHeaderAppearance = DataGridViewColumnHeaderCell.appearance(whenContainedInInstancesOf: [MultiplicationTableViewController.self])
         columnHeaderAppearance.borderRightWidth = 1 / UIScreen.main.scale
         columnHeaderAppearance.borderRightColor = UIColor(white: 0.73, alpha: 1)
 
-        let cellAppearance = DataGridViewContentCell.glyuck_appearanceWhenContained(in: MultiplicationTableViewController.self)!
+        let cellAppearance = DataGridViewContentCell.appearance(whenContainedInInstancesOf: [MultiplicationTableViewController.self])
         cellAppearance.borderRightWidth = 1 / UIScreen.main.scale
         cellAppearance.borderRightColor = UIColor(white: 0.73, alpha: 1)
         cellAppearance.borderBottomWidth = 1 / UIScreen.main.scale
         cellAppearance.borderBottomColor = UIColor(white: 0.73, alpha: 1)
 
         columnHeaderAppearance.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        let labelAppearance = UILabel.glyuck_appearanceWhenContained(in: MultiplicationTableViewController.self)!
-        labelAppearance.appearanceFont = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
-        labelAppearance.appearanceTextAlignment = .center
+        let labelAppearance = UILabel.appearance(whenContainedInInstancesOf: [MultiplicationTableViewController.self])
+        labelAppearance.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
+        labelAppearance.textAlignment = .center
     }
 
     override func viewDidLoad() {

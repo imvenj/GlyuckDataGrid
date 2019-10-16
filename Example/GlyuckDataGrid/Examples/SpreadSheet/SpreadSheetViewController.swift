@@ -27,11 +27,11 @@ class SpreadSheetViewController: UIViewController, DataGridViewDataSource, DataG
 
     func setupView() {
 
-        let dataGridAppearance = DataGridView.glyuck_appearanceWhenContained(in: SpreadSheetViewController.self)!
+        let dataGridAppearance = DataGridView.appearance(whenContainedInInstancesOf: [SpreadSheetViewController.self])
         dataGridAppearance.row1BackgroundColor = nil
         dataGridAppearance.row2BackgroundColor = nil
 
-        let cornerHeaderAppearance = DataGridViewCornerHeaderCell.glyuck_appearanceWhenContained(in: SpreadSheetViewController.self)!
+        let cornerHeaderAppearance = DataGridViewCornerHeaderCell.appearance(whenContainedInInstancesOf: [SpreadSheetViewController.self])
         cornerHeaderAppearance.backgroundColor = Colors.headerBackground
         cornerHeaderAppearance.borderLeftWidth = 1 / UIScreen.main.scale
         cornerHeaderAppearance.borderTopWidth = 1 / UIScreen.main.scale
@@ -42,7 +42,7 @@ class SpreadSheetViewController: UIViewController, DataGridViewDataSource, DataG
         cornerHeaderAppearance.borderRightColor = Colors.border
         cornerHeaderAppearance.borderBottomColor = Colors.border
 
-        let rowHeaderAppearance = DataGridViewRowHeaderCell.glyuck_appearanceWhenContained(in :SpreadSheetViewController.self)!
+        let rowHeaderAppearance = DataGridViewRowHeaderCell.appearance(whenContainedInInstancesOf: [SpreadSheetViewController.self])
         rowHeaderAppearance.backgroundColor = Colors.headerBackground
         rowHeaderAppearance.borderLeftWidth = 1 / UIScreen.main.scale
         rowHeaderAppearance.borderBottomWidth = 1 / UIScreen.main.scale
@@ -51,10 +51,10 @@ class SpreadSheetViewController: UIViewController, DataGridViewDataSource, DataG
         rowHeaderAppearance.borderBottomColor = Colors.border
         rowHeaderAppearance.borderRightColor = Colors.border
 
-        let rowHeaderLabelAppearane = UILabel.glyuck_appearanceWhenContained(in: SpreadSheetViewController.self, class2: DataGridViewRowHeaderCell.self)!
-        rowHeaderLabelAppearane.appearanceTextAlignment = .right
+        let rowHeaderLabelAppearane = UILabel.appearance(whenContainedInInstancesOf: [SpreadSheetViewController.self, DataGridViewRowHeaderCell.self])
+        rowHeaderLabelAppearane.textAlignment = .right
 
-        let columnHeaderAppearance = DataGridViewColumnHeaderCell.glyuck_appearanceWhenContained(in: SpreadSheetViewController.self)!
+        let columnHeaderAppearance = DataGridViewColumnHeaderCell.appearance(whenContainedInInstancesOf: [SpreadSheetViewController.self])
         columnHeaderAppearance.backgroundColor = Colors.headerBackground
         columnHeaderAppearance.borderTopWidth = 1 / UIScreen.main.scale
         columnHeaderAppearance.borderBottomWidth = 1 / UIScreen.main.scale
@@ -63,16 +63,16 @@ class SpreadSheetViewController: UIViewController, DataGridViewDataSource, DataG
         columnHeaderAppearance.borderBottomColor = Colors.border
         columnHeaderAppearance.borderRightColor = Colors.border
 
-        let cellAppearance = DataGridViewContentCell.glyuck_appearanceWhenContained(in: SpreadSheetViewController.self)!
+        let cellAppearance = DataGridViewContentCell.appearance(whenContainedInInstancesOf: [SpreadSheetViewController.self])
         cellAppearance.borderRightWidth = 1 / UIScreen.main.scale
         cellAppearance.borderRightColor = UIColor(white: 0.73, alpha: 1)
         cellAppearance.borderBottomWidth = 1 / UIScreen.main.scale
         cellAppearance.borderBottomColor = UIColor(white: 0.73, alpha: 1)
 
         columnHeaderAppearance.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        let labelAppearance = UILabel.glyuck_appearanceWhenContained(in: SpreadSheetViewController.self)!
-        labelAppearance.appearanceFont = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
-        labelAppearance.appearanceTextAlignment = .center
+        let labelAppearance = UILabel.appearance(whenContainedInInstancesOf: [SpreadSheetViewController.self])
+        labelAppearance.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
+        labelAppearance.textAlignment = .center
     }
 
     override func viewDidLoad() {

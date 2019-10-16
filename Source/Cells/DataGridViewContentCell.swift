@@ -15,15 +15,10 @@ open class DataGridViewContentCell: DataGridViewBaseCell {
         let appearance = DataGridViewContentCell.appearance()
         appearance.textLabelInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         
-        if let labelAppearance = UILabel.glyuck_appearanceWhenContained(in: DataGridViewContentCell.self) {
-            if #available(iOS 8.2, *) {
-                labelAppearance.appearanceFont = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.light)
-            } else {
-                labelAppearance.appearanceFont = UIFont(name: "HelveticaNeue-Light", size: 14)
-            }
-            labelAppearance.appearanceMinimumScaleFactor = 0.5
-            labelAppearance.appearanceNumberOfLines = 0
-        }
+        let labelAppearance = UILabel.appearance(whenContainedInInstancesOf: [DataGridViewContentCell.self])
+        labelAppearance.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.light)
+        labelAppearance.minimumScaleFactor = 0.5
+        labelAppearance.numberOfLines = 0
     }()
 
     @objc public override init(frame: CGRect) {
