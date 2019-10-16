@@ -15,24 +15,24 @@ import UIKit
 open class DataGridViewLayout: UICollectionViewLayout {
     fileprivate(set) open var dataGridView: DataGridView!
 
-    public init(dataGridView: DataGridView) {
+    @objc public init(dataGridView: DataGridView) {
         self.dataGridView = dataGridView
         super.init()
     }
 
-    public override init() {
+    @objc public override init() {
         fatalError("init() has not been implemented")
     }
 
-    public required init(coder aDecoder: NSCoder) {
+    @objc public required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func heightForRow(_ row: Int) -> CGFloat {
+    @objc open func heightForRow(_ row: Int) -> CGFloat {
         return dataGridView?.delegate?.dataGridView?(dataGridView!, heightForRow: row) ?? dataGridView.rowHeight
     }
 
-    open func widthForColumn(_ column: Int) -> CGFloat {
+    @objc open func widthForColumn(_ column: Int) -> CGFloat {
         if let width = dataGridView?.delegate?.dataGridView?(dataGridView!, widthForColumn: column) {
             return width
         }
@@ -45,11 +45,11 @@ open class DataGridViewLayout: UICollectionViewLayout {
         return 0
     }
 
-    open func widthForRowHeader() -> CGFloat {
+    @objc open func widthForRowHeader() -> CGFloat {
         return dataGridView.rowHeaderWidth
     }
 
-    open func heightForSectionHeader() -> CGFloat {
+    @objc open func heightForSectionHeader() -> CGFloat {
         return dataGridView.columnHeaderHeight
     }
 

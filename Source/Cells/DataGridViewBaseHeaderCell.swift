@@ -23,12 +23,12 @@ open class DataGridViewBaseHeaderCell: DataGridViewBaseCell {
         }
     }
     /// Background color for sorted state
-    open dynamic var sortedBackgroundColor: UIColor? {
+    @objc open dynamic var sortedBackgroundColor: UIColor? {
         didSet {
             updateSortedTitleAndBackground()
         }
     }
-    open override dynamic var backgroundColor: UIColor? {
+    @objc open override dynamic var backgroundColor: UIColor? {
         get {
             return super.backgroundColor
         }
@@ -37,45 +37,45 @@ open class DataGridViewBaseHeaderCell: DataGridViewBaseCell {
         }
     }
     /// This suffix will be appended to title if column/row is sorted in ascending order.
-    open dynamic var sortAscSuffix: String?
+    @objc open dynamic var sortAscSuffix: String?
     /// This suffix will be appended to title if column/row is sorted in descending order.
-    open dynamic var sortDescSuffix: String?
+    @objc open dynamic var sortDescSuffix: String?
     /// Header title. Use this property instead of assigning to textLabel.text.
-    open var title: String = "" {
+    @objc open var title: String = "" {
         didSet {
             updateSortedTitleAndBackground()
         }
     }
     /// Is this header in sorted state (i.e. has sortedBackgroundColor and sortAscSuffix/sortDescSuffix applied)
-    open var isSorted: Bool = false {
+    @objc open var isSorted: Bool = false {
         didSet {
             updateSortedTitleAndBackground()
         }
     }
     /// Is this header in sorted ascending or descending order? Only taken into account if isSorted == true.
-    open var isSortedAsc: Bool = true {
+    @objc open var isSortedAsc: Bool = true {
         didSet {
             updateSortedTitleAndBackground()
         }
     }
-    open var dataGridView: DataGridView!
-    open var indexPath: IndexPath!
+    @objc open var dataGridView: DataGridView!
+    @objc open var indexPath: IndexPath!
 
     // MARK: - UIView
 
-    public override init(frame: CGRect) {
+    @objc public override init(frame: CGRect) {
         super.init(frame: frame)
         setupDataGridViewHeaderCell()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupDataGridViewHeaderCell()
     }
 
     // MARK: - Custom methods
 
-    open func updateSortedTitleAndBackground() {
+    @objc open func updateSortedTitleAndBackground() {
         if isSorted {
             textLabel.text = title + ((isSortedAsc ? sortAscSuffix : sortDescSuffix) ?? "")
             super.backgroundColor = sortedBackgroundColor
@@ -85,17 +85,17 @@ open class DataGridViewBaseHeaderCell: DataGridViewBaseCell {
         }
     }
 
-    open func setupDataGridViewHeaderCell() {
+    @objc open func setupDataGridViewHeaderCell() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DataGridViewBaseHeaderCell.didTap(_:)))
         contentView.addGestureRecognizer(tapGestureRecognizer)
     }
 
-    open func configureForDataGridView(_ dataGridView: DataGridView, indexPath: IndexPath) {
+    @objc open func configureForDataGridView(_ dataGridView: DataGridView, indexPath: IndexPath) {
         self.dataGridView = dataGridView
         self.indexPath = indexPath
     }
 
-    open func didTap(_ gesture: UITapGestureRecognizer) {
+    @objc open func didTap(_ gesture: UITapGestureRecognizer) {
         dataGridView.collectionViewDelegate.collectionView(dataGridView.collectionView, didTapHeaderForColumn: indexPath.index)
     }
 }

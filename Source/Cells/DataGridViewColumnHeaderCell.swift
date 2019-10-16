@@ -20,7 +20,7 @@ open class DataGridViewColumnHeaderCell: DataGridViewBaseHeaderCell {
         
         if let labelAppearance = UILabel.glyuck_appearanceWhenContained(in: DataGridViewColumnHeaderCell.self) {
             if #available(iOS 8.2, *) {
-                labelAppearance.appearanceFont = UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular)
+                labelAppearance.appearanceFont = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
             } else {
                 labelAppearance.appearanceFont = UIFont(name: "HelveticaNeue", size: 14)
             }
@@ -32,14 +32,19 @@ open class DataGridViewColumnHeaderCell: DataGridViewBaseHeaderCell {
         
     }()
     // MARK: - UIView
-    open override static func initialize() {
-        super.initialize()
+    @objc public override init(frame: CGRect) {
+        super.init(frame: frame)
         _ = DataGridViewColumnHeaderCell.__once
     }
-    
+
+    @objc public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        _ = DataGridViewColumnHeaderCell.__once
+    }
+
     // MARK: - Custom methods
     
-    open override func didTap(_ gesture: UITapGestureRecognizer) {
+    @objc open override func didTap(_ gesture: UITapGestureRecognizer) {
         dataGridView.collectionViewDelegate.collectionView(dataGridView.collectionView, didTapHeaderForColumn: indexPath.index)
     }
 }

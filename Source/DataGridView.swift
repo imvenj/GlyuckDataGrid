@@ -22,7 +22,7 @@ import UIKit
 
      - returns: Number of columns in data grid view.
      */
-    func numberOfColumnsInDataGridView(_ dataGridView: DataGridView) -> Int
+    @objc func numberOfColumnsInDataGridView(_ dataGridView: DataGridView) -> Int
 
     /**
      Asks the data source object for number of rows in specified data grid view.
@@ -31,7 +31,7 @@ import UIKit
 
      - returns: Number of rows in data grid view.
      */
-    func numberOfRowsInDataGridView(_ dataGridView: DataGridView) -> Int
+    @objc func numberOfRowsInDataGridView(_ dataGridView: DataGridView) -> Int
 
     /**
      Asks the data source for title of header of the specified column in data grid view. You should use either this method or dataGridView:viewForHeaderForColumn: to configure header view.
@@ -179,6 +179,7 @@ import UIKit
 /**
  An instance of DataGridView (or simply, a data grid view) is a means for displaying and editing data represented in multicolumn tables (or 2-dimension matrices).
 */
+@objc
 open class DataGridView: UIView {
     private static var __once: () = {
             let appearance = DataGridView.appearance()
@@ -217,30 +218,30 @@ open class DataGridView: UIView {
     }()
 
     /// Object incapsulates logic for data source of collection view.
-    open lazy var collectionViewDataSource: CollectionViewDataSource = {
+    @objc open lazy var collectionViewDataSource: CollectionViewDataSource = {
         return CollectionViewDataSource(dataGridView: self)
     }()
 
     /// Object incapsulates logic for data source of collection view.
-    open lazy var collectionViewDelegate: CollectionViewDelegate = {
+    @objc open lazy var collectionViewDelegate: CollectionViewDelegate = {
         return CollectionViewDelegate(dataGridView: self)
     }()
 
     /// The object that provides the data for the data grid view.
-    open weak var dataSource: DataGridViewDataSource?
+    @objc open weak var dataSource: DataGridViewDataSource?
     /// The object that acts as the delegate of the data grid view.
-    open weak var delegate: DataGridViewDelegate?
+    @objc open weak var delegate: DataGridViewDelegate?
 
     /// Height for every row in data grid view
-    open var rowHeight: CGFloat = 44
+    @objc open var rowHeight: CGFloat = 44
     /// Height for header row
-    open var columnHeaderHeight: CGFloat = 44
+    @objc open var columnHeaderHeight: CGFloat = 44
     /// Width for vertical header displayed on left of each row. If zero, vertical headers are not displayed.
-    open var rowHeaderWidth: CGFloat = 0
+    @objc open var rowHeaderWidth: CGFloat = 0
     /// Background color for even rows of zebra-striped tables.
-    open dynamic var row1BackgroundColor: UIColor?
+    @objc open dynamic var row1BackgroundColor: UIColor?
     /// Background color for odd rows of zebra-striped tables.
-    open dynamic var row2BackgroundColor: UIColor?
+    @objc open dynamic var row2BackgroundColor: UIColor?
 
     /// Current sort column of data grid view.
     fileprivate(set) open var sortColumn: Int?
@@ -253,7 +254,7 @@ open class DataGridView: UIView {
      - parameter column:    An index number identifying column of data grid view.
      - parameter ascending: Boolean indicating sort direction. True if should sort in ascending order or false if descending order.
      */
-    open func setSortColumn(_ column: Int, ascending: Bool) {
+    @objc open func setSortColumn(_ column: Int, ascending: Bool) {
         sortColumn = column
         sortAscending = ascending
         delegate?.dataGridView?(self, didSortByColumn: column, ascending: ascending)
@@ -265,7 +266,7 @@ open class DataGridView: UIView {
 
      - returns: The number of columns in data grid view.
      */
-    open func numberOfColumns() -> Int {
+    @objc open func numberOfColumns() -> Int {
         return dataSource?.numberOfColumnsInDataGridView(self) ?? 0
     }
 
@@ -275,14 +276,15 @@ open class DataGridView: UIView {
 
      - returns: The number of rows in data grid view.
      */
-    open func numberOfRows() -> Int {
+    @objc open func numberOfRows() -> Int {
         return dataSource?.numberOfRowsInDataGridView(self) ?? 0
     }
 
     /**
      This function is used to configure data grid view after creation. Register default cells, setup colors, etc.
      */
-    open func setupDataGridView() {
+    @objc open func setupDataGridView() {
+        _ = DataGridView.__once
         registerClass(DataGridViewContentCell.self, forCellWithReuseIdentifier: ReuseIdentifiers.defaultCell)
         registerClass(DataGridViewColumnHeaderCell.self, forHeaderOfKind: .ColumnHeader, withReuseIdentifier: ReuseIdentifiers.defaultColumnHeader)
         registerClass(DataGridViewRowHeaderCell.self, forHeaderOfKind: .RowHeader, withReuseIdentifier: ReuseIdentifiers.defaultRowHeader)
@@ -292,7 +294,7 @@ open class DataGridView: UIView {
     /**
      Reloads the rows and columns of the data grid view.
      */
-    open func reloadData() {
+    @objc open func reloadData() {
         collectionView.reloadData()
     }
 
@@ -301,7 +303,7 @@ open class DataGridView: UIView {
 
      - parameter row: An index number identifying row to be highlighted.
      */
-    open func highlightRow(_ row: Int) {
+    @objc open func highlightRow(_ row: Int) {
         for column in 0..<numberOfColumns() {
             let indexPath = IndexPath(item: column, section: row)
             if let cell = collectionView.cellForItem(at: indexPath) {
@@ -315,7 +317,7 @@ open class DataGridView: UIView {
 
      - parameter row: And index number identifying row to be unhighlighted.
      */
-    open func unhighlightRow(_ row: Int) {
+    @objc open func unhighlightRow(_ row: Int) {
         for column in 0..<numberOfColumns() {
             let indexPath = IndexPath(item: column, section: row)
             if let cell = collectionView.cellForItem(at: indexPath) {
@@ -330,11 +332,11 @@ open class DataGridView: UIView {
      - parameter row:      An index number identifying row to be selected.
      - parameter animated: true if you want to animate the selection; false if the change should be immediate.
      */
-    open func selectRow(_ row: Int, animated: Bool) {
+    @objc open func selectRow(_ row: Int, animated: Bool) {
         collectionView.indexPathsForSelectedItems?.forEach { collectionView.deselectItem(at: $0, animated: animated) }
         for column in 0..<numberOfColumns() {
             let indexPath = IndexPath(item: column, section: row)
-            collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: UICollectionViewScrollPosition())
+            collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: UICollectionView.ScrollPosition())
         }
     }
 
@@ -344,7 +346,7 @@ open class DataGridView: UIView {
      - parameter row:      An index number identifying row to be deselected.
      - parameter animated: true if you want to animate the selection; false if the change should be immediate.
      */
-    open func deselectRow(_ row: Int, animated: Bool) {
+    @objc open func deselectRow(_ row: Int, animated: Bool) {
         for column in 0..<numberOfColumns() {
             let indexPath = IndexPath(item: column, section: row)
             collectionView.deselectItem(at: indexPath, animated: animated)
@@ -357,7 +359,7 @@ open class DataGridView: UIView {
      - parameter nib:        The nib object containing the cell object. The nib file must contain only one top-level object and that object must be of the type UICollectionViewCell.
      - parameter identifier: The reuse identifier for the cell. This parameter must not be nil and must not be an empty string.
      */
-    open func registerNib(_ nib: UINib, forCellWithReuseIdentifier identifier: String) {
+    @objc open func registerNib(_ nib: UINib, forCellWithReuseIdentifier identifier: String) {
         collectionView.register(nib, forCellWithReuseIdentifier: identifier)
     }
 
@@ -367,7 +369,7 @@ open class DataGridView: UIView {
      - parameter cellClass:  The class of a cell that you want to use in the data grid view.
      - parameter identifier: The reuse identifier for the cell. This parameter must not be nil and must not be an empty string.
      */
-    open func registerClass(_ cellClass: DataGridViewContentCell.Type, forCellWithReuseIdentifier identifier: String) {
+    @objc open func registerClass(_ cellClass: DataGridViewContentCell.Type, forCellWithReuseIdentifier identifier: String) {
         collectionView.register(cellClass, forCellWithReuseIdentifier: identifier)
     }
 
@@ -379,7 +381,7 @@ open class DataGridView: UIView {
 
      - returns: A UICollectionView object with the associated reuse identifier. This method always returns a valid cell.
      */
-    open func dequeueReusableCellWithReuseIdentifier(_ identifier: String, forIndexPath indexPath: IndexPath) -> UICollectionViewCell {
+    @objc open func dequeueReusableCellWithReuseIdentifier(_ identifier: String, forIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
         if indexPath.dataGridRow % 2 == 0 {
             cell.backgroundColor = row1BackgroundColor
@@ -419,7 +421,7 @@ open class DataGridView: UIView {
 
      - returns: A DataGridViewColumnHeaderCell object with the associated reuse identifier. This method always returns a valid view.
      */
-    open func dequeueReusableHeaderViewWithReuseIdentifier(_ identifier: String, forColumn column: NSInteger) -> DataGridViewColumnHeaderCell {
+    @objc open func dequeueReusableHeaderViewWithReuseIdentifier(_ identifier: String, forColumn column: NSInteger) -> DataGridViewColumnHeaderCell {
         let indexPath = IndexPath(index: column)
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: SupplementaryViewKind.ColumnHeader.rawValue, withReuseIdentifier: identifier, for: indexPath)
         guard let headerCell = cell as? DataGridViewColumnHeaderCell else {
@@ -439,7 +441,7 @@ open class DataGridView: UIView {
 
      - returns: A DataGridViewColumnHeaderCell object with the associated reuse identifier. This method always returns a valid view.
      */
-    open func dequeueReusableHeaderViewWithReuseIdentifier(_ identifier: String, forRow row: NSInteger) -> DataGridViewRowHeaderCell {
+    @objc open func dequeueReusableHeaderViewWithReuseIdentifier(_ identifier: String, forRow row: NSInteger) -> DataGridViewRowHeaderCell {
         let indexPath = IndexPath(index: row)
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: SupplementaryViewKind.RowHeader.rawValue, withReuseIdentifier: identifier, for: indexPath)
         guard let headerCell = cell as? DataGridViewRowHeaderCell else {
@@ -457,7 +459,7 @@ open class DataGridView: UIView {
 
      - returns: A DataGridViewColumnHeaderCell object with the associated reuse identifier. This method always returns a valid view.
      */
-    open func dequeueReusableCornerHeaderViewWithReuseIdentifier(_ identifier: String) -> DataGridViewCornerHeaderCell {
+    @objc open func dequeueReusableCornerHeaderViewWithReuseIdentifier(_ identifier: String) -> DataGridViewCornerHeaderCell {
         let indexPath = IndexPath(index: 0)
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: SupplementaryViewKind.CornerHeader.rawValue, withReuseIdentifier: identifier, for: indexPath)
         guard let headerCell = cell as? DataGridViewCornerHeaderCell else {
@@ -469,29 +471,24 @@ open class DataGridView: UIView {
 
     // UIView
 
-    open override static func initialize() {
-        super.initialize()
-        _ = DataGridView.__once
-    }
-
-    public override init(frame: CGRect) {
+    @objc public override init(frame: CGRect) {
         super.init(frame: frame)
         setupDataGridView()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupDataGridView()
     }
 
     // UIScrollView
 
-    open var contentOffset: CGPoint {
+    @objc open var contentOffset: CGPoint {
         set { collectionView.contentOffset = newValue }
         get { return collectionView.contentOffset }
     }
 
-    open func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
+    @objc open func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
         collectionView.setContentOffset(contentOffset, animated: animated)
     }
 }

@@ -16,6 +16,7 @@ class CollectionViewDelegateSpec: QuickSpec {
         var dataGridView: DataGridView!
         var stubDataSource: StubDataGridViewDataSource!
         var stubDelegate: StubDataGridViewDelegate!
+        var stubMinimumDataGridViewDelegate: StubMinimumDataGridViewDelegate!
 
         var sut: CollectionViewDelegate!
 
@@ -127,7 +128,8 @@ class CollectionViewDelegateSpec: QuickSpec {
 
             it("should return true if delegate doesn't implement dataGridView:shouldSelectRow:") {
                 // when
-                dataGridView.delegate = StubMinimumDataGridViewDelegate()
+                stubMinimumDataGridViewDelegate = StubMinimumDataGridViewDelegate()
+                dataGridView.delegate = stubMinimumDataGridViewDelegate
 
                 // then
                 expect(sut.collectionView(dataGridView.collectionView, shouldSelectItemAt: IndexPath(item: 0, section: 0))).to(beTrue())

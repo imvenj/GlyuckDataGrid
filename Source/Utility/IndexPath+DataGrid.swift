@@ -49,22 +49,22 @@ public extension NSIndexPath {
 
      - returns: An NSIndexPath object.
      */
-    convenience init(forColumn column: Int, row: Int) {
+    @objc convenience init(forColumn column: Int, row: Int) {
         self.init(item: column, section: row)
     }
 
     /// An index number identifying a column in a row of a data grid view. (read-only)
-    var dataGridColumn: Int {
+    @objc var dataGridColumn: Int {
         return self.index(atPosition: 1)
     }
 
     /// An index number identifying a row in a data grid view. (read-only)
-    var dataGridRow: Int {
+    @objc var dataGridRow: Int {
         return self.index(atPosition: 0)
     }
 
     /// An index number for single-item indexPath
-    var index: Int {
+    @objc var index: Int {
         return self.index(atPosition: 0)
     }
 }

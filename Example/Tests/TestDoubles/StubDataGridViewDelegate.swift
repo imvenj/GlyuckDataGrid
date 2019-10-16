@@ -26,7 +26,7 @@ class StubDataGridViewDelegate: NSObject, DataGridViewDelegate {
     }
 
     func dataGridView(_ dataGridView: DataGridView, shouldFloatColumn column: Int) -> Bool {
-        return floatingColumns.index(of: column) != nil
+        return floatingColumns.firstIndex(of: column) != nil
     }
 
     func dataGridView(_ dataGridView: DataGridView, shouldSortByColumn column: Int) -> Bool {
