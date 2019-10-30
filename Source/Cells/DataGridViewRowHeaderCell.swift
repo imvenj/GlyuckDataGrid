@@ -37,4 +37,7 @@ open class DataGridViewRowHeaderCell: DataGridViewBaseHeaderCell {
         super.init(coder: coder)
         _ = DataGridViewRowHeaderCell.__once
     }
+
+    @objc override open func didTap(_ gesture: UITapGestureRecognizer) {
+    }
 }

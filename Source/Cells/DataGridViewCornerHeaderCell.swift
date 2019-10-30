@@ -10,4 +10,6 @@ import UIKit
 
 
 open class DataGridViewCornerHeaderCell: DataGridViewBaseHeaderCell {
+    @objc override open func didTap(_ gesture: UITapGestureRecognizer) {
+    }
 }
