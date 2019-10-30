@@ -27,10 +27,16 @@ open class CollectionViewDelegate:  NSObject, UICollectionViewDelegate {
     
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.indexPathsForSelectedItems?.forEach { collectionView.deselectItem(at: $0, animated: false) }
-        dataGridView.selectColumn((indexPath as NSIndexPath).row, animated: false)
-        dataGridView.delegate?.dataGridView?(dataGridView, didSelectColumn: (indexPath as NSIndexPath).row)
-        dataGridView.selectRow((indexPath as NSIndexPath).section, animated: false)
-        dataGridView.delegate?.dataGridView?(dataGridView, didSelectRow: (indexPath as NSIndexPath).section)
+        let column = (indexPath as NSIndexPath).row
+        let row = (indexPath as NSIndexPath).section
+        if dataGridView.delegate?.dataGridView?(dataGridView, shouldSelectColumn: column) == true {
+            dataGridView.selectColumn(column, animated: false)
+            dataGridView.delegate?.dataGridView?(dataGridView, didSelectColumn: column)
+        }
+        if dataGridView.delegate?.dataGridView?(dataGridView, shouldSelectRow: row) == true {
+            dataGridView.selectRow(row, animated: false)
+            dataGridView.delegate?.dataGridView?(dataGridView, didSelectRow: row)
+        }
     }
 
     open func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
