@@ -173,6 +173,24 @@ import UIKit
      - parameter row:          An index number identifying row that was selected.
      */
     @objc optional func dataGridView(_ dataGridView: DataGridView, didSelectRow row: Int)
+
+    /**
+     Asks the delegate if the specified column should be selected.
+
+     - parameter dataGridView: The data grid view requesting information.
+     - parameter column:          An index number identifying column of data grid view.
+
+     - returns: true if the column should be selected or false if it should not.
+     */
+    @objc optional func dataGridView(_ dataGridView: DataGridView, shouldSelectColumn column: Int) -> Bool
+
+    /**
+     Tells the delegate that the column at the specified index was selected.
+
+     - parameter dataGridView: The data grid view object that is notifying you of the selection change.
+     - parameter column:          An index number identifying column that was selected.
+     */
+    @objc optional func dataGridView(_ dataGridView: DataGridView, didSelectColumn column: Int)
 }
 
 
@@ -333,7 +351,6 @@ open class DataGridView: UIView {
      - parameter animated: true if you want to animate the selection; false if the change should be immediate.
      */
     @objc open func selectRow(_ row: Int, animated: Bool) {
-        collectionView.indexPathsForSelectedItems?.forEach { collectionView.deselectItem(at: $0, animated: animated) }
         for column in 0..<numberOfColumns() {
             let indexPath = IndexPath(item: column, section: row)
             collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: UICollectionView.ScrollPosition())
@@ -348,6 +365,60 @@ open class DataGridView: UIView {
      */
     @objc open func deselectRow(_ row: Int, animated: Bool) {
         for column in 0..<numberOfColumns() {
+            let indexPath = IndexPath(item: column, section: row)
+            collectionView.deselectItem(at: indexPath, animated: animated)
+        }
+    }
+
+    /**
+     Highlights the specified column in the data grid view. Highlights only visible cells.
+
+     - parameter column: An index number identifying column to be highlighted.
+     */
+    @objc open func highlightColumn(_ column: Int) {
+        for row in 0..<numberOfRows() {
+            let indexPath = IndexPath(item: column, section: row)
+            if let cell = collectionView.cellForItem(at: indexPath) {
+                cell.isHighlighted = true
+            }
+        }
+    }
+
+    /**
+     Unhighlights the specified column in the data grid view. Unhighlights only visible cells.
+
+     - parameter column: And index number identifying column to be unhighlighted.
+     */
+    @objc open func unhighlightColumn(_ column: Int) {
+        for row in 0..<numberOfRows() {
+            let indexPath = IndexPath(item: column, section: row)
+            if let cell = collectionView.cellForItem(at: indexPath) {
+                cell.isHighlighted = false
+            }
+        }
+    }
+
+    /**
+     Selects the whole specified column in the data grid view.
+
+     - parameter column:      An index number identifying column to be selected.
+     - parameter animated: true if you want to animate the selection; false if the change should be immediate.
+     */
+    @objc open func selectColumn(_ column: Int, animated: Bool) {
+        for row in 0..<numberOfRows() {
+            let indexPath = IndexPath(item: column, section: row)
+            collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: UICollectionView.ScrollPosition())
+        }
+    }
+
+    /**
+     Deselectes the whole specified column in the data grid view.
+
+     - parameter column:      An index number identifying column to be deselected.
+     - parameter animated: true if you want to animate the selection; false if the change should be immediate.
+     */
+    @objc open func deselectColumn(_ column: Int, animated: Bool) {
+        for row in 0..<numberOfRows() {
             let indexPath = IndexPath(item: column, section: row)
             collectionView.deselectItem(at: indexPath, animated: animated)
         }

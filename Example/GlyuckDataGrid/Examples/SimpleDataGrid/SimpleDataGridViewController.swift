@@ -81,6 +81,14 @@ class SimpleDataGridViewController: UIViewController, DataGridViewDataSource, Da
 
     // MARK: DataGridViewDelegate
 
+    func dataGridView(_ dataGridView: DataGridView, shouldSelectColumn column: Int) -> Bool {
+        return true
+    }
+
+    func dataGridView(_ dataGridView: DataGridView, shouldSelectRow row: Int) -> Bool {
+        return true
+    }
+
     func dataGridView(_ dataGridView: DataGridView, widthForColumn column: Int) -> CGFloat {
         return F1DataSource.columnsWidths[column]
     }

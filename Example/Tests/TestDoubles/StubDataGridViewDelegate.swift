@@ -16,6 +16,8 @@ class StubDataGridViewDelegate: NSObject, DataGridViewDelegate {
     var didSortByColumnBlock: ((Int) -> Void)?
     var shouldSelectRowBlock: ((Int) -> Bool)?
     var didSelectRowBlock: ((Int) -> Void)?
+    var shouldSelectColumnBlock: ((Int) -> Bool)?
+    var didSelectColumnBlock: ((Int) -> Void)?
 
     func dataGridView(_ dataGridView: DataGridView, widthForColumn column: Int) -> CGFloat {
         return columnWidth
@@ -43,6 +45,14 @@ class StubDataGridViewDelegate: NSObject, DataGridViewDelegate {
 
     func dataGridView(_ dataGridView: DataGridView, didSelectRow row: Int) {
         didSelectRowBlock?(row)
+    }
+
+    func dataGridView(_ dataGridView: DataGridView, shouldSelectColumn column: Int) -> Bool {
+        return shouldSelectRowBlock?(column) ?? true
+    }
+
+    func dataGridView(_ dataGridView: DataGridView, didSelectColumn column: Int) {
+        didSelectRowBlock?(column)
     }
 }
 

@@ -21,23 +21,29 @@ open class CollectionViewDelegate:  NSObject, UICollectionViewDelegate {
     }
 
     open func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return dataGridView.delegate?.dataGridView?(dataGridView, shouldSelectRow: (indexPath as NSIndexPath).section) ?? true
+        return dataGridView.delegate?.dataGridView?(dataGridView, shouldSelectRow: (indexPath as NSIndexPath).section) ?? true ||
+            dataGridView.delegate?.dataGridView?(dataGridView, shouldSelectColumn: (indexPath as NSIndexPath).row) ?? true
     }
     
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.indexPathsForSelectedItems?.forEach { collectionView.deselectItem(at: $0, animated: false) }
+        dataGridView.selectColumn((indexPath as NSIndexPath).row, animated: false)
+        dataGridView.delegate?.dataGridView?(dataGridView, didSelectColumn: (indexPath as NSIndexPath).row)
         dataGridView.selectRow((indexPath as NSIndexPath).section, animated: false)
         dataGridView.delegate?.dataGridView?(dataGridView, didSelectRow: (indexPath as NSIndexPath).section)
     }
 
     open func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        dataGridView.deselectRow((indexPath as NSIndexPath).section , animated: false)
+        collectionView.indexPathsForSelectedItems?.forEach { collectionView.deselectItem(at: $0, animated: false) }
     }
 
     open func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        dataGridView.highlightColumn((indexPath as NSIndexPath).row)
         dataGridView.highlightRow((indexPath as NSIndexPath).section)
     }
 
     open func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        dataGridView.unhighlightColumn((indexPath as NSIndexPath).row)
         dataGridView.unhighlightRow((indexPath as NSIndexPath).section)
     }
 
