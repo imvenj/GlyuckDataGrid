@@ -39,7 +39,7 @@ open class DataGridViewColumnHeaderCell: DataGridViewBaseHeaderCell {
 
     // MARK: - Custom methods
     
-    @objc open func didTap(_ gesture: UITapGestureRecognizer) {
+    @objc open override func didTap(_ gesture: UITapGestureRecognizer) {
         dataGridView.collectionViewDelegate.collectionView(dataGridView.collectionView, didTapHeaderForColumn: indexPath.index)
     }
 }
