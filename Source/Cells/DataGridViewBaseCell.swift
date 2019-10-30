@@ -19,6 +19,7 @@ open class DataGridViewBaseCell: UICollectionViewCell {
     @objc open dynamic var highlightedBackgroundColor = UIColor(white: 0.9, alpha: 1)
     /// Background color for selected state.
     @objc open dynamic var selectedBackgroundColor = UIColor(white: 0.8, alpha: 1)
+    @objc open dynamic var shouldHighlightCell: Bool = false
     /// Helper object for configuring cell borders.
     open lazy var border: BorderHelper = {
         BorderHelper(view: self)
@@ -35,7 +36,7 @@ open class DataGridViewBaseCell: UICollectionViewCell {
 
     @objc open override var isHighlighted: Bool {
         didSet {
-            contentView.backgroundColor = isHighlighted ? highlightedBackgroundColor : UIColor.clear
+            if shouldHighlightCell { contentView.backgroundColor = isHighlighted ? highlightedBackgroundColor : UIColor.clear }
         }
     }
 
