@@ -40,9 +40,24 @@ open class DataGridViewBaseCell: UICollectionViewCell {
         }
     }
 
+    @objc open var animateSelection: Bool = false
+
     @objc open override var isSelected: Bool {
         didSet {
-            contentView.backgroundColor = isSelected ? selectedBackgroundColor : UIColor.clear
+            if animateSelection {
+                if isSelected {
+                    UIView.animate(withDuration: 1.0, delay: 0.0, options: [.autoreverse, .repeat, .curveEaseInOut, .allowUserInteraction], animations: {
+                        self.contentView.backgroundColor = self.highlightedBackgroundColor
+                    }, completion: nil)
+                }
+                else {
+                    contentView.layer.removeAllAnimations()
+                    contentView.backgroundColor = .clear
+                }
+            }
+            else {
+                contentView.backgroundColor = isSelected ? selectedBackgroundColor : UIColor.clear
+            }
         }
     }
 

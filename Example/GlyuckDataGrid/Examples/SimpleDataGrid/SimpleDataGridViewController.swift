@@ -63,6 +63,7 @@ class SimpleDataGridViewController: UIViewController, DataGridViewDataSource, Da
 
     func dataGridView(_ dataGridView: DataGridView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let cell = dataGridView.dequeueReusableCellWithReuseIdentifier(DataGridView.ReuseIdentifiers.defaultCell, forIndexPath: indexPath) as! DataGridViewContentCell
+        cell.animateSelection = true
         cell.textLabel.text = self.dataGridView(dataGridView, textForCellAtIndexPath: indexPath)
         switch indexPath.dataGridColumn {
         case 0,2,5,6,7,8,9,11:
