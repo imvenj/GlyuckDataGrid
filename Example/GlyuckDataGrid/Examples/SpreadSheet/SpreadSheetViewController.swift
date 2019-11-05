@@ -118,6 +118,12 @@ class SpreadSheetViewController: UIViewController, DataGridViewDataSource, DataG
         return cell
     }
 
+    func viewForCornerHeader(in dataGridView: DataGridView) -> DataGridViewCornerHeaderCell {
+        let cell = dataGridView.dequeueReusableCornerHeaderViewWithReuseIdentifier(DataGridView.ReuseIdentifiers.defaultCornerHeader)
+        cell.textLabel.text = "COR"
+        return cell
+    }
+
     // MARK: DataGridViewDelegate
 
     func dataGridView(_ dataGridView: DataGridView, widthForColumn column: Int) -> CGFloat {

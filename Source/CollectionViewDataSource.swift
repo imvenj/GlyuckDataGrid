@@ -87,7 +87,13 @@ open class CollectionViewDataSource: NSObject, UICollectionViewDataSource {
     }
 
     open func cornerHeaderViewForIndexPath(_ indexPath: IndexPath) -> DataGridViewCornerHeaderCell {
-        let cell = dataGridView.dequeueReusableCornerHeaderViewWithReuseIdentifier(DataGridView.ReuseIdentifiers.defaultRowHeader)
+        guard let dataGridDataSource = dataGridView.dataSource else {
+            fatalError("dataGridView.dataSource unexpectedly nil")
+        }
+        if let view = dataGridDataSource.viewForCornerHeader?(in: dataGridView) {
+            return view
+        }
+        let cell = dataGridView.dequeueReusableCornerHeaderViewWithReuseIdentifier(DataGridView.ReuseIdentifiers.defaultCornerHeader)
         return cell
     }
 }

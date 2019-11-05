@@ -97,6 +97,8 @@ import UIKit
      - returns: A string to us as text for default cell.
      */
     @objc optional func dataGridView(_ dataGridView: DataGridView, textForCellAtIndexPath indexPath: IndexPath) -> String
+
+    @objc optional func viewForCornerHeader(in dataGridView: DataGridView) -> DataGridViewCornerHeaderCell
 }
 
 
